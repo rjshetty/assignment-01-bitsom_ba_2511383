@@ -1,0 +1,60 @@
+[{
+  "_id": "001",
+  "name": "Samsung 55-inch Smart TV",
+  "category": "Electronics",
+  "price": 45000,
+  "brand": "Samsung",
+  "warranty_years": 2,
+  "specifications": {
+    "resolution": "4K",
+    "display_type": "LED",
+    "voltage": "220-240V"
+  },
+  "features": [
+    "Smart TV",
+    "WiFi",
+    "Bluetooth"
+  ],
+  "stock": 25
+},
+{
+  "_id": "002",
+  "name": "Men's Casual Shirt",
+  "category": "Clothing",
+  "price": 1200,
+  "brand": "Levi's",
+  "size_options": [
+    "S",
+    "M",
+    "L",
+    "XL"
+  ],
+  "material": "Cotton",
+  "color": "Blue",
+  "ratings": [
+    {
+      "user": "user1",
+      "rating": 4
+    },
+    {
+      "user": "user2",
+      "rating": 5
+    }
+  ],
+  "stock": 100
+},
+{
+  "_id": "003",
+  "name": "Organic Milk",
+  "category": "Groceries",
+  "price": 60,
+  "brand": "Amul",
+  "expiry_date": "2024-12-20",
+  "nutritional_info": {
+    "calories": 150,
+    "fat": "8g",
+    "protein": "6g"
+  },
+  "storage": "Refrigerated",
+  "stock": 200
+}]
