@@ -1,4 +1,5 @@
--- SQLBook: Code
+-- SQLBook: Code for Data Warehouse Queries
+CREATE DATABASE IF NOT EXISTS data_warehouse;
 USE data_warehouse;
 
 -- Q1: Total sales revenue by product category for each month

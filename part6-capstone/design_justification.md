@@ -1,27 +1,76 @@
 ## Storage Systems
 
-The system uses a combination of OLTP databases, a data lake, and a data warehouse to support different workloads efficiently.
+### 1. Patient & Medicine Data (OLTP)
 
-For real-time clinical operations, a relational OLTP database such as PostgreSQL is used to store patient records, treatment history, and transactional updates. This ensures low latency and high consistency, which is critical for doctors accessing patient data.
+* **Storage:** Relational Database (MySQL / PostgreSQL)
+* **Why:**
 
-A data lake (e.g., Amazon S3) is used to store raw and semi-structured data, including ICU vital streams, doctor notes, and historical logs. This allows the system to handle large volumes of diverse data formats such as text and time-series data without strict schema constraints.
+  * Handles day-to-day transactions
+  * Fast updates & consistency
+  * Suitable for structured hospital data
 
-For reporting and analytics, a data warehouse like Snowflake is used. It stores cleaned and structured data optimized for complex queries, enabling efficient generation of monthly reports such as bed occupancy and department-wise costs.
+### 2. ICU Real-time Data
 
-Streaming data from ICU devices is ingested using Kafka and stored in the data lake, while also being processed in real time for alerting and monitoring.
+* **Storage:** Time-Series Database
+* **Why:**
+
+  * Optimized for continuous sensor data
+  * Handles high-frequency real-time data
+  * Efficient for monitoring vitals
+
+### 3. Data Warehouse (OLAP)
+
+* **Storage:** Data Warehouse (Snowflake)
+* **Why:**
+
+  * Optimized for analytics & reporting
+  * Handles large historical datasets
+  * Fast query performance for dashboards
+
+### 4. AI & NLP Processing Data
+
+* **Storage:** Data Lake (AWS S3 / Azure Data Lake)
+* **Why:**
+
+  * Stores raw + unstructured data
+  * Useful for machine learning models
+  * Flexible and scalable
+  
 
 ## OLTP vs OLAP Boundary
 
-The OLTP system consists of the hospital’s operational database (PostgreSQL), which handles real-time transactions such as patient updates, admissions, and treatments. This layer is optimized for fast inserts and updates with strict consistency.
+* **OLTP (Left Side):**
 
-The OLAP system begins once data is extracted from the OLTP database and moved into the data lake and data warehouse via ETL pipelines. The data lake stores raw historical data, while the warehouse stores transformed, analytics-ready data.
+  * Patient Data
+  * Medicine Data
+  * ICU Devices
+  * (Transactional systems)
 
-All analytical workloads, including reporting, machine learning model training, and natural language query processing, are performed on the OLAP side. This separation ensures that heavy analytical queries do not impact real-time hospital operations.
+* **ETL Layer:**
+
+  * Extracts & transforms data
+
+* **OLAP (Right Side):**
+
+  * Data Warehouse (OLAP)
+  * Analytics (Reports + AI Models)
+
+OLTP handles real-time transactions, and after ETL processing, data moves into OLAP for analytics and reporting.
+
 
 ## Trade-offs
+**Significant trade-off**:
 
-A major trade-off in this architecture is between data latency and system complexity. Introducing multiple layers (streaming pipelines, data lake, warehouse, ML models) increases architectural complexity and operational overhead.
+* Batch processing → delayed insights
+* Real-time processing → complex & costly
+* In design using both batch + real-time ingestion
 
-However, this is necessary to support diverse use cases such as real-time ICU monitoring and batch reporting simultaneously. To mitigate this complexity, the system can adopt managed services such as AWS Glue, Snowflake, and managed Kafka, reducing infrastructure maintenance.
+**How to mitigate it?**
 
-Additionally, implementing a data catalog and governance layer ensures better data visibility and control, helping manage the complexity effectively while maintaining scalability and performance.
+Use Hybrid Approach
+
+* Real-time → ICU alerts
+* Batch → reports & AI models
+
+There is a trade-off between real-time processing and system complexity. I mitigate it by using a hybrid approach with both batch and streaming data processing.
+
